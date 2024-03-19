@@ -1,5 +1,5 @@
 # C++ And WebAssembly
-This is an example C++ graphics application using vcpkg as its package manager; The codebase can be compiled for both native and Web platforms.
+This is an example C++ graphics application using vcpkg as its package manager; the codebase can be compiled for both native and Web platforms.
 - Package Manager: vcpkg
 - Supported Platforms: MacOSX, Web
 
@@ -13,6 +13,7 @@ This is an example C++ graphics application using vcpkg as its package manager; 
 ```Shell
 # Clone the repository
 git clone --recurse-submodules https://github.com/painfulexistence/cpp-wasm && cd cpp-wasm
+
 # Bootstrapping the package manager
 ./vcpkg/bootstrap-vcpkg.sh
 ```
@@ -25,7 +26,7 @@ cmake -S . -B build
 cmake --build build
 
 # Running
-./build/cpp-wasm
+./build/main
 ```
 #### Building for WebAssembly
 ```Shell

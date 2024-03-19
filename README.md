@@ -1,6 +1,7 @@
 # C++ And WebAssembly
-Package Manager: vcpkg
-Supported Platforms: MacOSX
+This is an example C++ graphics application using vcpkg as its package manager; The codebase can be compiled for both native and Web platforms.
+- Package Manager: vcpkg
+- Supported Platforms: MacOSX, Web
 
 ## Getting Started
 
@@ -11,7 +12,7 @@ Supported Platforms: MacOSX
 ### Getting the Source Code
 ```Shell
 # Clone the repository
-git clone --recurse-submodules {REPO_URL} && cd cpp-wasm
+git clone --recurse-submodules https://github.com/painfulexistence/cpp-wasm && cd cpp-wasm
 # Bootstrapping the package manager
 ./vcpkg/bootstrap-vcpkg.sh
 ```
@@ -35,5 +36,6 @@ cmake --build build-wasm
 # Running (open http://localhost:3000/ in your browser)
 python -m http.server -d ./build-wasm 3000 # Use your preferred local server
 ```
-#### Notes
-We didn't use GLEW because the vcpkg wasm32 port is currently borken
+
+### Notes
+- I didn't use GLEW because the vcpkg wasm32 port is currently borken

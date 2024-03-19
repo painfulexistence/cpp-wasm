@@ -22,7 +22,7 @@ git clone --recurse-submodules https://github.com/painfulexistence/cpp-wasm && c
 #### Building for native
 ```Shell
 # Building
-cmake -S . -B build
+cmake -S . -B build # Add -DCMAKE_BUILD_TYPE=release for release build
 cmake --build build
 
 # Running
@@ -31,7 +31,7 @@ cmake --build build
 #### Building for WebAssembly
 ```Shell
 # Building
-cmake -S . -B build-wasm -DEMSCRIPTEN=ON
+cmake -S . -B build-wasm -DEMSCRIPTEN=ON # Add -DCMAKE_BUILD_TYPE=release for release build
 cmake --build build-wasm
 
 # Running (open http://localhost:3000/ in your browser)

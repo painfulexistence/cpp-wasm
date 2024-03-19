@@ -22,6 +22,6 @@ target_link_libraries(main PRIVATE glad::glad)
 target_link_libraries(main PRIVATE fmt::fmt)
 if (EMSCRIPTEN)
     target_link_options(main PRIVATE "-sMAX_WEBGL_VERSION=2" "-WASM=1" "-Os" "-sEXPORTED_FUNCTIONS=_main,_sayHello" "-sMIN_SAFARI_VERSION=-1")
-    # TODO: check if index.html is re-copied correctly after modifying www/index.html
-    add_custom_command(TARGET main POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/www/index.html ${CMAKE_BINARY_DIR})
+    add_custom_target(copy_html COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/www/index.html ${CMAKE_BINARY_DIR})
+    add_dependencies(main copy_html)
 endif()

@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.25.0)
+
+set(EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
+option(EMSCRIPTEN "EMSCRIPTEN" OFF)
+
+if (EMSCRIPTEN)
+    set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake CACHE STRING "Emscripten toolchain file")
+    set(VCPKG_TARGET_TRIPLET wasm32-emscripten)
+    # This seems not working correctly (alway .js)
+    set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
+endif()
+project(cpp-wasm)
+
+find_package(SDL2 CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+
+add_executable(main src/main.cpp)
+target_link_libraries(main PRIVATE SDL2::SDL2)
+target_link_libraries(main PRIVATE glad::glad)
+target_link_libraries(main PRIVATE fmt::fmt)
+if (EMSCRIPTEN)
+    target_link_options(main PRIVATE "-sMAX_WEBGL_VERSION=2" "-WASM=1" "-Os" "-sEXPORTED_FUNCTIONS=_main,_sayHello" "-sMIN_SAFARI_VERSION=-1")
+    # TODO: check if index.html is re-copied correctly after modifying www/index.html
+    add_custom_command(TARGET main POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/www/index.html ${CMAKE_BINARY_DIR})
+endif()

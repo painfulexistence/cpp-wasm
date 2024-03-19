@@ -134,13 +134,13 @@ extern "C" {
 
 			initGL();
 
+		#ifdef __EMSCRIPTEN__
+			emscripten_set_main_loop(mainloop, 0, true);
+		#else
 			while (!quit) {
-			#ifdef __EMSCRIPTEN__
-				emscripten_set_main_loop(mainloop, 0, true);
-			#else
 				mainloop();
-			#endif
 			}
+		#endif
 		}
 		close();
 

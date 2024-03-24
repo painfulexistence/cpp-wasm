@@ -1,0 +1,24 @@
+{
+	"name": "C++",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/ebaskoro/devcontainer-features/emscripten:1": {},
+		"ghcr.io/msclock/features/vcpkg:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"twxs.cmake"
+			]
+		}
+	},
+	"postCreateCommand": "if [ ! -d 'build-wasm' ]; then cmake -S . -B build-wasm -DGLOBAL_VCPKG=ON -DEMSCRIPTEN=ON -DCMAKE_MAKE_PROGRAM=/usr/bin/make -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++; fi && cmake --build build-wasm",
+	"postStartCommand": "emrun ./build-wasm --no_browser --port 3000",
+	"forwardPorts": [3000],
+	"remoteUser": "root"
+}

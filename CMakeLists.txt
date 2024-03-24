@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 3.25.0)
+cmake_minimum_required(VERSION 3.20.0)
+
+option(GLOBAL_VCPKG "Use global Vcpkg " OFF)
+option(EMSCRIPTEN "Use Emscripten" OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
-option(EMSCRIPTEN "EMSCRIPTEN" OFF)
-
+if (GLOBAL_VCPKG)
+    set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+else()
+    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
+endif()
 if (EMSCRIPTEN)
     set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake CACHE STRING "Emscripten toolchain file")
     set(VCPKG_TARGET_TRIPLET wasm32-emscripten)
@@ -13,6 +18,7 @@ if (EMSCRIPTEN)
         set(CMAKE_BUILD_TYPE debug)
     endif()
 endif()
+
 project(cpp-wasm)
 
 find_package(SDL2 CONFIG REQUIRED)

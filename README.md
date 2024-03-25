@@ -39,4 +39,4 @@ python -m http.server -d ./build-wasm 3000 # Use your preferred local server
 ```
 
 ### Notes
-- I didn't use GLEW because the vcpkg wasm32 port is currently borken
+- I didn't use GLEW because the vcpkg wasm32 port is currently broken

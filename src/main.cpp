@@ -8,8 +8,8 @@
 	#include <emscripten.h>
 #endif
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 512;
+const int SCREEN_HEIGHT = 448;
 
 SDL_Window* window = NULL;
 SDL_GLContext context;

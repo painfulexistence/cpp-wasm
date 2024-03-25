@@ -3,18 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>C++ And WebAssembly</title>
+    <title>C++ and WebAssembly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <style>
+      html, body, pre, code, kbd, samp {
+        font-family: "Press Start 2P", system-ui;
+        font-weight: 400;
+        font-style: normal;
+      }
+      body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+      #app {
+        min-width: 600px;
+      }
+      canvas {
+        margin: 20px;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="app" class="nes-container is-rounded is-dark with-title is-centered">
+      <p class="title">C++ and WebAssembly</p>
+      <p><i class="nes-octocat animate"></i>This is a WebAssembly graphics application created in C++.</p> 
+      <p></p>
       <canvas id="canvas"></canvas>
-      <!-- Allow the C++ to access the canvas element --> 
-      <script type='application/javascript'>
-        var Module = {
-            canvas: document.getElementById('canvas')
-        };
-    </script>
+      <hr />
+      <section class="message-list">
+        <section class="message -left">
+          <div class="nes-balloon from-right is-dark">
+            <p>The codebase can be compiled for both native and Web platforms!</p>
+          </div>
+        </section>
+      </section>
+      <progress class="nes-progress is-pattern" value="50" max="100"></progress>
     </div>
+    <script type='application/javascript'>
+      var Module = {
+          canvas: document.getElementById('canvas')
+      };
+    </script>
     <script type="application/javascript" src="./main.js"></script>
   </body>
 </html>

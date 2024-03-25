@@ -37,6 +37,7 @@ cmake --build build-wasm
 # Running (open http://localhost:3000/ in your browser)
 python -m http.server -d ./build-wasm 3000 # Use your preferred local server
 ```
+![Screenshot](https://github.com/painfulexistence/cpp-wasm/assets/30090734/8f56dd7d-2d28-42ac-ad11-69559ae4242a)
 
 ### Notes
 - I didn't use GLEW because the vcpkg wasm32 port is currently broken

@@ -64,7 +64,7 @@ bool init() {
 };
 
 void initGL() {
-	glClearColor(0.0, 1.0, 1.0, 1.0);
+	glClearColor(0.96, 0.87, 0.70, 1.0);
 };
 
 void update() {

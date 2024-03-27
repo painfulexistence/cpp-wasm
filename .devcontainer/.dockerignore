@@ -3,3 +3,5 @@ build*/
 .vscode/
 .vs/
 *.log
+
+node_modules/

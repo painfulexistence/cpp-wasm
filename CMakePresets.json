@@ -1,43 +1,43 @@
 {
-    "version": 3,
-    "configurePresets": [
-        {
-            "name": "debug",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/build",
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "release",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/build/release",
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "debug",
-            "configurePreset": "debug"
-        },
-        {
-            "name": "release",
-            "configurePreset": "release"
-        }
-    ],
-    "testPresets": [
-        
-    ]
+  "version": 3,
+  "configurePresets": [
+  {
+    "name": "debug",
+    "generator": "Unix Makefiles",
+    "binaryDir": "${sourceDir}/build",
+    "architecture": {
+      "value": "x64",
+      "strategy": "external"
+    },
+    "cacheVariables": {
+      "CMAKE_BUILD_TYPE": "Debug"
+    }
+  },
+  {
+    "name": "release",
+    "generator": "Unix Makefiles",
+    "binaryDir": "${sourceDir}/build/release",
+    "architecture": {
+      "value": "x64",
+      "strategy": "external"
+    },
+    "cacheVariables": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin"
+    }
+  }
+  ],
+  "buildPresets": [
+  {
+    "name": "debug",
+    "configurePreset": "debug"
+  },
+  {
+    "name": "release",
+    "configurePreset": "release"
+  }
+  ],
+  "testPresets": [
+      
+  ]
 }

@@ -44,7 +44,7 @@ const getContentType = (filePath) => {
 
 const isSource = (filename) => {
   const ext = path.extname(filename).toLowerCase();
-  return [".cpp", ".hpp", ".c", ".h"].includes(ext) || path.basename(filename) === "CMakeLists.txt";
+  return [".cpp", ".hpp", ".c", ".h"].includes(ext) || path.basename(filename) === "CMakeLists.txt" || path.basename(filename) === "vcpkg.json";
 }
 
 const isAsset = (filename) => {

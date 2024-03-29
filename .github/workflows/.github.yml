@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -22,9 +22,9 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Init and Update Submodules
+      - name: Verify submodules
         run: |
-          git submodule update --init --recursive
+          ls ${{ github.workspace }}/vcpkg
 
       - name: Set strings
         id: strings
@@ -33,6 +33,7 @@ jobs:
 
       - name: Bootstrap vcpkg
         run: |
+          chmod +x ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
           ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
 
       - name: Install CMake on Ubuntu

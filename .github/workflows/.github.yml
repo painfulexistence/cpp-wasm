@@ -9,19 +9,20 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
+        platform: [native, web]
         build-type: [debug, release]
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          submodules: true
+          fetch-depth: 1
+          submodules: false
 
       # Install Vcpkg (submodule seems not working?)
       - uses: actions/checkout@v4
@@ -29,44 +30,54 @@ jobs:
           repository: 'microsoft/vcpkg'
           path: 'vcpkg'
 
-      # Install Emsdk
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'emscripten-core/emsdk'
-      #     path: 'emsdk'
-
       - name: Set strings
         id: strings
         run: |
           echo "build-dir=${{ github.workspace }}/build" >> $GITHUB_OUTPUT
+          echo "build-dir-web=${{ github.workspace }}/build-wasm" >> $GITHUB_OUTPUT
 
       - name: Bootstrap vcpkg
         run: |
           ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
 
       - name: Install CMake on Ubuntu
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake
 
       - name: Install CMake on macOS
-        if: matrix.platform == 'macos-latest'
+        if: matrix.os == 'macos-latest'
         run: |
           brew install cmake
 
-      - name: Set up EMSDK
+      - name: Install EMSDK
+        if: matrix.platform == 'web'
         run: |
           git clone https://github.com/emscripten-core/emsdk.git
-          ${{ github.workspace }}/emsdk install latest
-          ${{ github.workspace }}/emsdk activate latest
+          ${{ github.workspace }}/emsdk/emsdk install latest
+          ${{ github.workspace }}/emsdk/emsdk activate latest
           echo "EMSDK="${{ github.workspace }}/emsdk" >> $GITHUB_ENV
 
-      - name: CMake Configure
+      - name: CMake Configure for Native
+        if: matrix.platform == 'native'
         run: >
           cmake -S ${{ github.workspace }}
           -B ${{ steps.strings.outputs.build-dir }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
 
-      - name: CMake Build
+      - name: CMake Build for Native
+        if: matrix.platform == 'native'
         run: cmake --build ${{ steps.strings.outputs.build-dir }}
+
+      - name: CMake Configure for Web
+        if: matrix.platform == 'web'
+        run: >
+          cmake -S ${{ github.workspace }}
+          -B ${{ steps.strings.outputs.build-dir-web }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
+          -DEMSCRIPTEN=ON
+
+      - name: CMake Build for Web
+        if: matrix.platform == 'web'
+        run: cmake --build ${{ steps.strings.outputs.build-dir-web }}

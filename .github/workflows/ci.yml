@@ -57,7 +57,7 @@ jobs:
           git clone https://github.com/emscripten-core/emsdk.git
           ${{ github.workspace }}/emsdk/emsdk install latest
           ${{ github.workspace }}/emsdk/emsdk activate latest
-          echo "EMSDK="${{ github.workspace }}/emsdk" >> $GITHUB_ENV
+          echo "EMSDK=${{ github.workspace }}/emsdk" >> $GITHUB_ENV
 
       - name: CMake Configure for Native
         if: matrix.platform == 'native'

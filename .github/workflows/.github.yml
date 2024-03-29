@@ -20,11 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: true
 
       - name: Verify submodules
         run: |
-          ls ${{ github.workspace }}/vcpkg
+          ls ${{ github.workspace }}
 
       - name: Set strings
         id: strings

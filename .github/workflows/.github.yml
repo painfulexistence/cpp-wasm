@@ -18,13 +18,19 @@ jobs:
         build-type: [debug, release]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: recursive
 
       - name: Checkout submodules
         run: git submodule update --init --recursive
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: 'microsoft/vcpkg'
+          path: 'vcpkg'
 
       - name: Debug submodules
         run: |

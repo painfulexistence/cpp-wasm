@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Checkout submodules
@@ -27,8 +28,7 @@ jobs:
 
       - name: Debug submodules
         run: |
-          ls ${{ github.workspace }}/..
-          ls ${{ github.workspace }}/../..
+          ls ${{ github.workspace }}/
 
       - name: Set strings
         id: strings

@@ -18,16 +18,17 @@ jobs:
         build-type: [debug, release]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 
       - name: Checkout submodules
         run: git submodule update --init --recursive
 
-      - name: Verify submodules
+      - name: Debug submodules
         run: |
-          ls ${{ github.workspace }}
+          ls ${{ github.workspace }}/..
+          ls ${{ github.workspace }}/../..
 
       - name: Set strings
         id: strings

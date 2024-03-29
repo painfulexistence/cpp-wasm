@@ -1,4 +1,5 @@
 # C++ And WebAssembly
+[![Build](https://github.com/painfulexistence/cpp-wasm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/painfulexistence/cpp-wasm/actions/workflows/ci.yml)
 This is an example C++ graphics application using vcpkg as its package manager; the codebase can be compiled for both native and Web platforms.
 - Package Manager: vcpkg
 - Supported Platforms: MacOSX, Web

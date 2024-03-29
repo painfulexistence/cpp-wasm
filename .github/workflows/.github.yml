@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.platform }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest]
+        build-type: [debug, release]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Set strings
+        id: strings
+        run: |
+          echo "build-dir=${{ github.workspace }}/build" >> $GITHUB_OUTPUT
+
+      - name: Bootstrap vcpkg
+        run: |
+          ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
+
+      - name: Install CMake on Ubuntu
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake
+
+      - name: Install CMake on macOS
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install cmake
+
+      - name: Install EMSDK
+        shell: base
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git
+          cd emsdk
+          ./emsdk install latest
+          ./emsdk activate latest
+          echo "EMSDK="${{ github.workspace }}/emsdk" >> $GITHUB_ENV
+
+      - name: CMake Configure
+        run: >
+          cmake -S ${{ github.workspace }}
+          -B ${{ steps.strings.outputs.build-dir }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
+
+      - name: CMake Build
+        run: cmake --build ${{ steps.strings.outputs.build-dir }}

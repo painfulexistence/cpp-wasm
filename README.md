@@ -1,8 +1,16 @@
 # C++ And WebAssembly
+
 [![Build](https://github.com/painfulexistence/cpp-wasm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/painfulexistence/cpp-wasm/actions/workflows/ci.yml)
+![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat&logo=c%2B%2B&logoColor=white)
+![WebAssembly](https://img.shields.io/badge/WebAssembly-654FF0?style=flat&logo=WebAssembly&logoColor=white)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/DevLucidum.svg?style=social)](https://twitter.com/intent/follow?screen_name=DevLucidum)
+<br />
+<br />
+
 This is an example C++ graphics application using vcpkg as its package manager; the codebase can be compiled for both native and Web platforms.
 - Package Manager: vcpkg
 - Supported Platforms: MacOSX, Web
+<br />
 
 ## Getting Started
 

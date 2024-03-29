@@ -21,20 +21,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+          submodules: true
 
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
-
+      # Install Vcpkg (submodule seems not working?)
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           repository: 'microsoft/vcpkg'
           path: 'vcpkg'
 
-      - name: Debug submodules
-        run: |
-          ls ${{ github.workspace }}/
+      # Install Emsdk
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'emscripten-core/emsdk'
+      #     path: 'emsdk'
 
       - name: Set strings
         id: strings
@@ -43,7 +42,6 @@ jobs:
 
       - name: Bootstrap vcpkg
         run: |
-          chmod +x ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
           ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
 
       - name: Install CMake on Ubuntu
@@ -57,13 +55,11 @@ jobs:
         run: |
           brew install cmake
 
-      - name: Install EMSDK
-        shell: base
+      - name: Set up EMSDK
         run: |
           git clone https://github.com/emscripten-core/emsdk.git
-          cd emsdk
-          ./emsdk install latest
-          ./emsdk activate latest
+          ${{ github.workspace }}/emsdk install latest
+          ${{ github.workspace }}/emsdk activate latest
           echo "EMSDK="${{ github.workspace }}/emsdk" >> $GITHUB_ENV
 
       - name: CMake Configure

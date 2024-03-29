@@ -22,6 +22,10 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Init and Update Submodules
+        run: |
+          git submodule update --init --recursive
+
       - name: Set strings
         id: strings
         run: |

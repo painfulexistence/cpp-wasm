@@ -40,16 +40,16 @@ jobs:
         run: |
           ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
 
-      - name: Install CMake on Ubuntu
+      - name: Install CMake & Ninja on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake
+          sudo apt-get install -y cmake ninja
 
-      - name: Install CMake on macOS
+      - name: Install CMake & Ninja on macOS
         if: matrix.os == 'macos-latest'
         run: |
-          brew install cmake
+          brew install cmake ninja
 
       - name: Install EMSDK
         if: matrix.platform == 'web'
@@ -62,7 +62,8 @@ jobs:
       - name: CMake Configure for Native
         if: matrix.platform == 'native'
         run: >
-          cmake -S ${{ github.workspace }}
+          cmake -G Ninja
+          -S ${{ github.workspace }}
           -B ${{ steps.strings.outputs.build-dir }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
 
@@ -73,7 +74,8 @@ jobs:
       - name: CMake Configure for Web
         if: matrix.platform == 'web'
         run: >
-          cmake -S ${{ github.workspace }}
+          cmake -G Ninja
+          -S ${{ github.workspace }}
           -B ${{ steps.strings.outputs.build-dir-web }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
           -DEMSCRIPTEN=ON
